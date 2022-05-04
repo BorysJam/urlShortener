@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/9d04a6002a.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>URL SHORTY</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="shortH1">Skracaj to!</h1>
+        <form action="/shortUrl" method="post">
+            <input type="url" name="url" id="" class="input">
+            <input type="button" value="Wklej" class="wklej" onclick="pasteText(this)">
+            <input type="submit" class="button" value="Skróć URL">
+        </form>
+        <p>Skracaj to jest darmowym narzędziem do skracania linków url. <br> Wszyscy mogą korzystać z SKRACAJ za darmo bez ogarniczeń</p>
+    </div>
+    <div class="tableContainer">
+        <table>
+            <thead>
+                <tr>
+                    <th id="oryginal">Długi url</th>
+                    <th class="shortTh">Skrócony url</th>
+                    <th>Kliknięcia</th>
+                    <th>Sesja</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each shortUrls}}
+                <tr>
+                    <td id="oryginalUrl"><a href="{{url}}">{{url}}</a></td>
+                    <td class="shortTd"><a href="{{short}}">http://localhost:3000/{{short}}</a><button class="kopiuj" onclick="kopiujLink(this)">Kopiuj<i class="fa-solid fa-copy"></i></button></td>
+                    <td><a id="liczba">{{clicks}}</a></td> 
+                    <td><a >{{session}}</a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const kopiuj = document.querySelector('.kopiuj')
+        const wklej = document.querySelector('.wklej')
+        function kopiujLink(e){
+            let link = e.previousElementSibling.innerText;
+            navigator.clipboard.writeText(link)
+        }
+        async function pasteText(e) {
+            let input =  e.previousElementSibling;
+            const text = await navigator.clipboard.readText();
+            input.value = text
+           // input.value = text;
+        }
+    </script>
+</body>
+</html>
